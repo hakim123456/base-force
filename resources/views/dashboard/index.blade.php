@@ -14,27 +14,7 @@
         </div>
     </x-slot>
 
-    @php
-        $names = ['أحمد', 'محمد', 'عمر', 'علي', 'خالد', 'عبدالله', 'محمود', 'يوسف', 'حسن', 'حسين', 'إبراهيم', 'طارق', 'ياسين', 'وليد', 'سمير'];
-        $fathers = ['محمد', 'صالح', 'عبدالرحمن', 'حسن', 'علي', 'عمر', 'عبدالكريم', 'سالم', 'أحمد', 'مصطفى'];
-        $surnames = ['الطاهري', 'الجبالي', 'الطرابلسي', 'الرياحي', 'الماجري', 'اليعقوبي', 'العرفاوي', 'الحمامي', 'الحداد', 'العبيدي'];
-        $addresses = ['شارع الحبيب بورقيبة', 'حي النصر', 'المنزه', 'سيدي بوسعيد', 'المرسى', 'باردو', 'العوينة', 'سوسة', 'صفاقس', 'القيروان'];
-
-        $data = [];
-        for ($i = 1; $i <= 100; $i++) {
-            $data[] = [
-                'id' => 10000000 + $i,
-                'name' => $names[array_rand($names)],
-                'father' => $fathers[array_rand($fathers)],
-                'grandfather' => $fathers[array_rand($fathers)],
-                'surname' => $surnames[array_rand($surnames)],
-                'dob' => rand(1, 28) . '-' . str_pad(rand(1, 12), 2, '0', STR_PAD_LEFT) . '-' . rand(1970, 2000),
-                'address' => $addresses[array_rand($addresses)] . '، تونس'
-            ];
-        }
-    @endphp
-
-    <div x-data="datatable(@js($data))">
+    <div x-data="datatable(@js($people))">
         <!-- Search and Filters -->
         <div
             class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -150,16 +130,22 @@
                         <template x-for="(item, index) in paginatedItems" :key="item.id">
                             <tr class="hover:bg-gray-50 transition-colors"
                                 :class="{'bg-white': index % 2 === 0, 'bg-gray-50/30': index % 2 !== 0}">
-                                <td class="px-6 py-4 font-bold text-gray-900" x-text="item.id"></td>
-                                <td class="px-6 py-4" x-text="item.name"></td>
-                                <td class="px-6 py-4" x-text="item.father"></td>
-                                <td class="px-6 py-4" x-text="item.grandfather"></td>
-                                <td class="px-6 py-4" x-text="item.surname"></td>
+                                <td class="px-6 py-4 font-bold text-gray-900" x-text="item.identifier || '-'"></td>
+                                <td class="px-6 py-4" x-text="item.first_name"></td>
+                                <td class="px-6 py-4" x-text="item.father_name"></td>
+                                <td class="px-6 py-4" x-text="item.grandfather_name"></td>
+                                <td class="px-6 py-4" x-text="item.last_name"></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-gray-500" x-text="item.dob"></td>
                                 <td class="px-6 py-4" x-text="item.address"></td>
                                 <td class="px-6 py-4 flex items-center space-x-3 space-x-reverse">
-                                    <button
-                                        class="text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 rounded p-2"
+                                <a :href="'/dashboard/show/' + item.id" class="text-green-600 hover:text-green-800 transition-colors bg-green-50 hover:bg-green-100 rounded p-2" title="عرض التفاصيل">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </a>
+                                <button
+                                    class="text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 rounded p-2"
                                         title="تعديل">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

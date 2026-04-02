@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PersonController;
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -14,10 +16,7 @@ Route::post('/login', function () {
     return redirect()->route('dashboard.index'); // dummy login action
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->name('dashboard.index');
-
-Route::get('/dashboard/create', function () {
-    return view('dashboard.create');
-})->name('dashboard.create');
+Route::get('/dashboard', [PersonController::class, 'index'])->name('dashboard.index');
+Route::get('/dashboard/create', [PersonController::class, 'create'])->name('dashboard.create');
+Route::post('/dashboard/store', [PersonController::class, 'store'])->name('dashboard.store');
+Route::get('/dashboard/show/{person}', [PersonController::class, 'show'])->name('dashboard.show');

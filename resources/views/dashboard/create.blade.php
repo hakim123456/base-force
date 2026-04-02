@@ -11,8 +11,11 @@
         </div>
     </x-slot>
 
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-gray-100">
-        <form action="{{ route('dashboard.index') }}" method="POST">
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-gray-100 mb-6">
+        <form action="{{ route('dashboard.store') }}" method="POST">
             @csrf
             
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -21,8 +24,13 @@
                     <h3 class="text-lg font-bold text-primary border-b pb-2">المعلومات الشخصية</h3>
                     
                     <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">المعرف (الهوية)</label>
+                        <input type="text" name="identifier" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أدخل المعرف">
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">الاسم</label>
-                        <input type="text" name="first_name" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أدخل الاسم">
+                        <input type="text" name="first_name" required class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أدخل الاسم">
                     </div>
 
                     <div>
@@ -36,13 +44,13 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">اسم الأم</label>
-                        <input type="text" name="mother_name" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أدخل اسم الأم">
+                        <label class="block text-sm font-bold text-gray-700 mb-1">اسم الجد</label>
+                        <input type="text" name="grandfather_name" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أدخل اسم الجد">
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">تاريخ الولادة</label>
-                        <input type="date" name="birth_date" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm">
+                        <input type="date" name="dob" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm">
                     </div>
 
                     <div>
@@ -62,7 +70,7 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">وسائل التواصل الاجتماعي</label>
-                        <textarea name="social_media" rows="2" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="روابط أو حسابات التواصل"></textarea>
+                        <textarea name="social" rows="2" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="روابط أو حسابات التواصل"></textarea>
                     </div>
                 </div>
 
@@ -82,7 +90,7 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">المستوى الحالي</label>
-                        <input type="text" name="current_level" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="المستوى الأكاديمي أو التعليمي">
+                        <input type="text" name="level" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="المستوى الأكاديمي أو التعليمي">
                     </div>
 
                     <div>
@@ -92,12 +100,12 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">المجال الديني</label>
-                        <input type="text" name="religious_field" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="التوجه أو النشاط الديني">
+                        <input type="text" name="religion" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="التوجه أو النشاط الديني">
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">المشاركة في الأعمال الدعوية</label>
-                        <input type="text" name="dawah_participation" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="تفاصيل المشاركات">
+                        <input type="text" name="dawah" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="تفاصيل المشاركات">
                     </div>
 
                     <div>
@@ -120,6 +128,34 @@
                         <textarea name="notes" rows="4" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أي ملاحظات إضافية ضرورية..."></textarea>
                     </div>
                 </div>
+                
+                <!-- Bottom Section (Geolocation) -->
+                <div class="md:col-span-2 space-y-5 border-t pt-5">
+                    <h3 class="text-lg font-bold text-primary border-b pb-2 flex items-center">
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        الموقع الجغرافي (Géolocalisation)
+                    </h3>
+                    <p class="text-sm text-gray-500">انقر على الخريطة لتحديد الموقع أو استخدم زر تحديد الموقع التلقائي.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">خط العرض (Latitude)</label>
+                            <input type="text" id="latitude" name="latitude" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm bg-gray-50" placeholder="مثال: 36.8065" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">خط الطول (Longitude)</label>
+                            <input type="text" id="longitude" name="longitude" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm bg-gray-50" placeholder="مثال: 10.1815" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="button" onclick="getCurrentLocation()" class="mb-3 px-4 py-2 bg-blue-100 text-blue-800 font-bold text-sm rounded-lg hover:bg-blue-200 transition flex items-center">
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            تحديد موقعي الحالي
+                        </button>
+                        <div id="map" class="w-full h-80 rounded-xl border border-gray-300 shadow-inner z-0"></div>
+                    </div>
+                </div>
             </div>
             
             <!-- Footer Actions -->
@@ -133,4 +169,61 @@
             </div>
         </form>
     </div>
+
+    <!-- Leaflet JS logic -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialiser la carte sur Tunis par défaut
+        var map = L.map('map').setView([36.8065, 10.1815], 7); 
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        var marker;
+
+        // Événement clic sur la carte
+        map.on('click', function(e) {
+            var lat = e.latlng.lat.toFixed(7);
+            var lng = e.latlng.lng.toFixed(7);
+            
+            // Mise à jour des inputs
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            
+            // Placement du marker
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                marker = L.marker(e.latlng).addTo(map);
+            }
+        });
+
+        // Géolocalisation automatique
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude.toFixed(7);
+                    var lng = position.coords.longitude.toFixed(7);
+                    
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+                    
+                    var newLatLng = new L.LatLng(lat, lng);
+                    map.setView(newLatLng, 13);
+                    
+                    if (marker) {
+                        marker.setLatLng(newLatLng);
+                    } else {
+                        marker = L.marker(newLatLng).addTo(map);
+                    }
+                }, function(error) {
+                    alert("Erreur de géolocalisation. Veuillez autoriser l'accès ou cliquer sur la carte.");
+                });
+            } else {
+                alert("La géolocalisation n'est pas supportée par votre navigateur.");
+            }
+        }
+    </script>
 </x-app-layout>
