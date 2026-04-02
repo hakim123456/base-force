@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Tajawal', ui-sans-serif, system-ui, sans-serif;
+    --color-primary: #1e40af; /* blue-800 */
+    --color-primary-light: #2563eb; /* blue-600 */
+    --color-background: #f3f4f6; /* gray-100 */
+}
+
+/* RTL Specific helpers if needed */
+body {
+    background-color: var(--color-background);
+}
