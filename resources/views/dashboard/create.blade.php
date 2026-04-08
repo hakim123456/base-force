@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-gray-100 mb-6">
-        <form action="{{ route('dashboard.store') }}" method="POST">
+        <form action="{{ route('dashboard.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -23,6 +23,12 @@
                 <div class="space-y-5">
                     <h3 class="text-lg font-bold text-primary border-b pb-2">المعلومات الشخصية</h3>
                     
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">الصورة الشخصية</label>
+                        <input type="file" name="photo" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm">
+                        <p class="text-xs text-gray-500 mt-1">تنسيقات مدعومة: JPG, PNG, GIF (الحد الأقصى 2 ميجابايت)</p>
+                    </div>
+
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">المعرف (الهوية)</label>
                         <input type="text" name="identifier" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary text-sm" placeholder="أدخل المعرف">

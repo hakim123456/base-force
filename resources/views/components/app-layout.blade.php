@@ -39,8 +39,11 @@
                         <span class="text-2xl font-bold tracking-tight">تطبيقة الخزائن الرقمية</span>
                     </div>
                     <div class="flex items-center space-x-4 space-x-reverse">
-                        <span class="text-sm font-medium">مرحباً، المستخدم</span>
-                        <a href="{{ route('login') }}"
+                        <span class="text-sm font-medium">مرحباً، {{ auth()->user()->name }}</span>
+                        <form method="POST" action="{{ route('logout') }}" id="logout-form" class="hidden">
+                            @csrf
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                             class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-bold transition">خروج</a>
                     </div>
                 </div>
@@ -49,8 +52,16 @@
                 <div
                     class="flex overflow-x-auto py-2 space-x-2 space-x-reverse hide-scrollbar border-t border-primary-light/50">
                     <a href="{{ route('dashboard.index') }}"
-                        class="px-4 py-2 rounded-t-lg bg-white text-primary font-bold text-sm whitespace-nowrap"> قائمة
+                        class="px-4 py-2 rounded-t-lg {{ request()->routeIs('dashboard.*') ? 'bg-white text-primary' : 'hover:bg-primary-light' }} font-bold text-sm whitespace-nowrap"> قائمة
                         العناصر المتطرفة</a>
+                    
+                    @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.users.index') }}"
+                        class="px-4 py-2 rounded-t-lg {{ request()->routeIs('admin.users.*') ? 'bg-white text-primary' : 'hover:bg-primary-light' }} font-bold text-sm whitespace-nowrap">
+                        إدارة المستخدمين
+                    </a>
+                    @endif
+
                     <a href="#"
                         class="px-4 py-2 hover:bg-primary-light rounded-t-lg transition text-sm font-medium whitespace-nowrap">قائمة
                         العناصر الارهابية</a>

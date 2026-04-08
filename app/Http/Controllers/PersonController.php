@@ -21,7 +21,7 @@ class PersonController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'identifier' => 'nullable|string|max:255|unique:people,identifier',
+            'identifier' => 'nullable|string|max:255|unique:personne,identifier',
             'first_name' => 'required|string|max:255',
             'father_name' => 'nullable|string|max:255',
             'grandfather_name' => 'nullable|string|max:255',
@@ -43,7 +43,13 @@ class PersonController extends Controller
             'notes' => 'nullable|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('photos', 'public');
+            $validatedData['photo'] = $path;
+        }
 
         Person::create($validatedData);
 

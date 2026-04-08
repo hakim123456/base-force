@@ -14,7 +14,7 @@
         </div>
     </x-slot>
 
-    <div x-data="datatable(@js($people))">
+    <div x-data="datatable(@js($people), '{{ auth()->user()->role }}')">
         <!-- Search and Filters -->
         <div
             class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -144,7 +144,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                     </svg>
                                 </a>
-                                <button
+                                <button x-show="userRole === 'admin' || userRole === 'manager'"
                                     class="text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 rounded p-2"
                                         title="تعديل">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,7 +153,7 @@
                                             </path>
                                         </svg>
                                     </button>
-                                    <button
+                                    <button x-show="userRole === 'admin' || userRole === 'manager'"
                                         class="text-red-600 hover:text-red-800 transition-colors bg-red-50 hover:bg-red-100 rounded p-2"
                                         title="حذف">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,8 +204,9 @@
     <!-- Alpine Data Logic -->
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('datatable', (initialData) => ({
+            Alpine.data('datatable', (initialData, role) => ({
                 items: initialData,
+                userRole: role,
                 search: '',
                 sortCol: 'id',
                 sortAsc: true,

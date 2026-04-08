@@ -20,7 +20,11 @@
             <!-- Right Column - Profile Card -->
             <div class="md:col-span-1 border border-gray-100 bg-white rounded-xl shadow-sm p-6 flex flex-col items-center">
                 <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-gray-100 shadow-sm mb-4 bg-gray-50">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($person->first_name . ' ' . $person->last_name) }}&background=1e40af&color=fff&size=200&font-size=0.3" alt="صورة الشخص" class="w-full h-full object-cover">
+                    @if($person->photo)
+                        <img src="{{ asset('storage/' . $person->photo) }}" alt="صورة الشخص" class="w-full h-full object-cover">
+                    @else
+                        <img src="https://ui-avatars.com/api/?name={{ urlencode($person->first_name . ' ' . $person->last_name) }}&background=1e40af&color=fff&size=200&font-size=0.3" alt="صورة الشخص" class="w-full h-full object-cover">
+                    @endif
                 </div>
                 <h3 class="text-xl font-bold text-gray-900">{{ $person->first_name }} {{ $person->last_name }}</h3>
                 <p class="text-sm font-medium text-gray-500 mt-1">المعرف: {{ $person->identifier ?? 'غير متوفر' }}</p>
