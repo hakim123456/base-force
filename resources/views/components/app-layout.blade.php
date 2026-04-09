@@ -52,19 +52,16 @@
                 <div
                     class="flex overflow-x-auto py-2 space-x-2 space-x-reverse hide-scrollbar border-t border-primary-light/50">
                     <a href="{{ route('dashboard.index') }}"
-                        class="px-4 py-2 rounded-t-lg {{ request()->routeIs('dashboard.*') ? 'bg-white text-primary' : 'hover:bg-primary-light' }} font-bold text-sm whitespace-nowrap"> قائمة
+                        class="px-4 py-2 rounded-t-lg {{ request()->routeIs('dashboard.*') ? 'bg-white text-primary' : 'hover:bg-primary-light' }} font-bold text-sm whitespace-nowrap">
+                        قائمة
                         العناصر المتطرفة</a>
-                    
-                    @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.users.index') }}"
-                        class="px-4 py-2 rounded-t-lg {{ request()->routeIs('admin.users.*') ? 'bg-white text-primary' : 'hover:bg-primary-light' }} font-bold text-sm whitespace-nowrap">
-                        إدارة المستخدمين
-                    </a>
-                    @endif
 
-                    <a href="#"
-                        class="px-4 py-2 hover:bg-primary-light rounded-t-lg transition text-sm font-medium whitespace-nowrap">قائمة
-                        العناصر الارهابية</a>
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.users.index') }}"
+                            class="px-4 py-2 rounded-t-lg {{ request()->routeIs('admin.users.*') ? 'bg-white text-primary' : 'hover:bg-primary-light' }} font-bold text-sm whitespace-nowrap">
+                            إدارة المستخدمين
+                        </a>
+                    @endif
                     <a href="#"
                         class="px-4 py-2 hover:bg-primary-light rounded-t-lg transition text-sm font-medium whitespace-nowrap">قائمة
                         المسرحين</a>

@@ -134,6 +134,22 @@
                             <p class="text-gray-800 font-medium">{{ $person->father_name ?? '-' }} {{ $person->grandfather_name ?? '' }}</p>
                         </div>
                         <div>
+                            <span class="block text-gray-400 font-bold mb-1 text-xs">اسم الأم ولقبها</span>
+                            <p class="text-gray-800 font-medium">{{ $person->mother_name ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <span class="block text-gray-400 font-bold mb-1 text-xs">الجنس</span>
+                            <p class="text-gray-800 font-medium">{{ $person->gender ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <span class="block text-gray-400 font-bold mb-1 text-xs">الحالة الاجتماعية</span>
+                            <p class="text-gray-800 font-medium">{{ $person->marital_status ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <span class="block text-gray-400 font-bold mb-1 text-xs">اسم ولقب الزوج/الزوجة</span>
+                            <p class="text-gray-800 font-medium">{{ $person->spouse_name ?? '-' }}</p>
+                        </div>
+                        <div>
                             <span class="block text-gray-400 font-bold mb-1 text-xs">تاريخ الولادة</span>
                             <p class="text-gray-800 font-medium">{{ $person->dob ?? '-' }}</p>
                         </div>

@@ -77,13 +77,13 @@
                         <div class="grid grid-cols-2 gap-3 mb-4">
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 mb-1">خط العرض</label>
-                                <input type="text" name="latitude" id="latitude" readonly
-                                    class="w-full bg-gray-50 border-gray-200 rounded text-sm font-mono text-center">
+                                <input type="text" name="latitude" id="latitude"
+                                    class="w-full border-gray-200 rounded text-sm font-mono text-center focus:ring-primary focus:border-primary">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 mb-1">خط الطول</label>
-                                <input type="text" name="longitude" id="longitude" readonly
-                                    class="w-full bg-gray-50 border-gray-200 rounded text-sm font-mono text-center">
+                                <input type="text" name="longitude" id="longitude"
+                                    class="w-full border-gray-200 rounded text-sm font-mono text-center focus:ring-primary focus:border-primary">
                             </div>
                         </div>
                         <div id="map" class="w-full h-64 rounded-lg border border-gray-200 shadow-inner z-0"></div>
@@ -134,6 +134,39 @@
                             <div>
                                 <label for="last_name" class="block text-sm font-bold text-gray-700">اللقب</label>
                                 <input type="text" name="last_name" id="last_name" value="{{ old('last_name') }}"
+                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="mother_name" class="block text-sm font-bold text-gray-700">اسم الأم
+                                    ولقبها</label>
+                                <input type="text" name="mother_name" id="mother_name" value="{{ old('mother_name') }}"
+                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="gender" class="block text-sm font-bold text-gray-700">الجنس</label>
+                                <select name="gender" id="gender"
+                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm">
+                                    <option value="">-- اختر الجنس --</option>
+                                    <option value="ذكر" {{ old('gender') == 'ذكر' ? 'selected' : '' }}>ذكر</option>
+                                    <option value="أنثى" {{ old('gender') == 'أنثى' ? 'selected' : '' }}>أنثى</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="marital_status" class="block text-sm font-bold text-gray-700">الحالة
+                                    الاجتماعية</label>
+                                <select name="marital_status" id="marital_status"
+                                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm">
+                                    <option value="">-- اختر الحالة --</option>
+                                    <option value="أعزب/عزباء" {{ old('marital_status') == 'أعزب/عزباء' ? 'selected' : '' }}>أعزب/عزباء</option>
+                                    <option value="متزوج/متزوجة" {{ old('marital_status') == 'متزوج/متزوجة' ? 'selected' : '' }}>متزوج/متزوجة</option>
+                                    <option value="مطلق/مطلقة" {{ old('marital_status') == 'مطلق/مطلقة' ? 'selected' : '' }}>مطلق/مطلقة</option>
+                                    <option value="أرمل/أرملة" {{ old('marital_status') == 'أرمل/أرملة' ? 'selected' : '' }}>أرمل/أرملة</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="spouse_name" class="block text-sm font-bold text-gray-700">اسم ولقب
+                                    الزوج/الزوجة</label>
+                                <input type="text" name="spouse_name" id="spouse_name" value="{{ old('spouse_name') }}"
                                     class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm">
                             </div>
                             <div>
@@ -342,7 +375,140 @@
                     "شالة"
                 ]
             },
-
+            "القصرين": {
+                "القصرين الشمالية": [
+                    "النور الشرقي",
+                    "النور الغربي",
+                    "البساتين",
+                    "الخضراء",
+                    "العريش",
+                    "بولعابة"
+                ],
+                "القصرين الجنوبية": [
+                    "العويجة",
+                    "بولهيجات",
+                    "مقدودش",
+                    "بوزقام",
+                    "سيدي حراث",
+                    "الدغرة"
+                ],
+                "الزهور": [
+                    "الزهور الشرقي 1",
+                    "الزهور الشرقي 2",
+                    "الزهور الغربي 1",
+                    "الزهور الغربي 2",
+                    "الزهور الغربي 3",
+                    "الزهور الغربي 4"
+                ],
+                "حاسي الفريد": [
+                    "حاسي الفريد",
+                    "الهشيم",
+                    "خنقة الجازية",
+                    "السلوم",
+                    "الكامور"
+                ],
+                "سبيطلة": [
+                    "سبيطلة",
+                    "حي السرور",
+                    "سمامة",
+                    "الرخمات",
+                    "القنة",
+                    "الدولاب",
+                    "الشرائع",
+                    "مشرق الشمس",
+                    "الوساعية",
+                    "الخضراء",
+                    "الآثار",
+                    "المزراة",
+                    "القرعة الحمراء",
+                    "القصر"
+                ],
+                "سبيبة": [
+                    "سبيبة",
+                    "الأحواز",
+                    "وادي الحطب",
+                    "إبراهيم الزهار",
+                    "عين زيان",
+                    "الثماد",
+                    "عين الخمائسية"
+                ],
+                "جدليان": [
+                    "جدليان",
+                    "فج تربح",
+                    "عين الحمادنة",
+                    "محرزة",
+                    "عين أم الجدور"
+                ],
+                "العيون": [
+                    "العيون",
+                    "القرين",
+                    "البرك",
+                    "البواجر",
+                    "توشة",
+                    "عين السلسلة"
+                ],
+                "تالة": [
+                    "تالة الشرقية",
+                    "تالة الغربية",
+                    "الدشرة",
+                    "عين الجديدة",
+                    "برماجنة",
+                    "وادي الرشح",
+                    "الجوي",
+                    "الحماد",
+                    "زلفان",
+                    "بو الأحناش",
+                    "سيدي محمد",
+                    "ولجة الظل",
+                    "الشافعي"
+                ],
+                "حيدرة": [
+                    "حيدرة",
+                    "الطباقة",
+                    "المكيمن",
+                    "الأجرد",
+                    "الصري",
+                    "عين الدفلة"
+                ],
+                "فوسانة": [
+                    "فوسانة",
+                    "فوسانة الأحواز",
+                    "خمودة الشمالية",
+                    "خمودة الجنوبية",
+                    "أولاد محفوظ",
+                    "أفران",
+                    "المزيرعة",
+                    "العذيرة",
+                    "الحازة",
+                    "البريكة",
+                    "بودرياس",
+                    "عين الجنان",
+                    "الرطيبات"
+                ],
+                "فريانة": [
+                    "فريانة",
+                    "العرق",
+                    "الأحواش",
+                    "الصخيرات",
+                    "العرعار",
+                    "حناشي",
+                    "قارة النعام",
+                    "بوشبكة",
+                    "أم علي",
+                    "بوحية",
+                    "تلابت",
+                    "عبد العظيم"
+                ],
+                "ماجل بلعباس": [
+                    "ماجل بلعباس الشمالية",
+                    "ماجل بلعباس الجنوبية",
+                    "أم الأقصاب",
+                    "الناظور",
+                    "هنشير أم الخير",
+                    "صولة",
+                    "قروع الجدرة"
+                ]
+            },
             "نابل": {
                 "نابل": [
                     "الأسواق",
@@ -798,12 +964,33 @@
             var lng = e.latlng.lng.toFixed(6);
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
+
             if (marker) {
                 marker.setLatLng(e.latlng);
             } else {
                 marker = L.marker(e.latlng).addTo(map);
             }
         });
+
+        function updateMapFromInputs() {
+            var latStr = document.getElementById('latitude').value;
+            var lngStr = document.getElementById('longitude').value;
+            var lat = parseFloat(latStr);
+            var lng = parseFloat(lngStr);
+
+            if (!isNaN(lat) && !isNaN(lng)) {
+                var newLatLng = [lat, lng];
+                if (marker) {
+                    marker.setLatLng(newLatLng);
+                } else {
+                    marker = L.marker(newLatLng).addTo(map);
+                }
+                map.panTo(newLatLng);
+            }
+        }
+
+        document.getElementById('latitude').addEventListener('input', updateMapFromInputs);
+        document.getElementById('longitude').addEventListener('input', updateMapFromInputs);
 
         function getCurrentLocation() {
             if (navigator.geolocation) {
@@ -846,7 +1033,7 @@
         }
 
         // Sync Quill with hidden textarea on form submit
-        document.getElementById('create-person-form').onsubmit = function() {
+        document.getElementById('create-person-form').onsubmit = function () {
             document.getElementById('notes').value = quill.root.innerHTML;
         };
 
@@ -888,7 +1075,7 @@
         .focus\:border-primary:focus {
             border-color: #1e40af;
         }
-        
+
         /* Quill RTL Fix */
         .ql-editor {
             direction: rtl;
