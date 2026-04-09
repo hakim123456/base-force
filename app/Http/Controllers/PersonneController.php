@@ -47,6 +47,10 @@ class PersonneController extends Controller
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'country' => 'nullable|string',
+            'governorate' => 'nullable|string',
+            'delegation' => 'nullable|string',
+            'sector' => 'nullable|string',
         ]);
 
         if ($request->hasFile('photo')) {
@@ -95,6 +99,10 @@ class PersonneController extends Controller
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'country' => 'nullable|string',
+            'governorate' => 'nullable|string',
+            'delegation' => 'nullable|string',
+            'sector' => 'nullable|string',
         ]);
 
         if ($request->hasFile('photo')) {

@@ -25,7 +25,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/store', [PersonController::class, 'store'])->name('dashboard.store');
     Route::get('/dashboard/show/{person}', [PersonController::class, 'show'])->name('dashboard.show');
 
-    Route::resource('personnes', PersonneController::class);
+    Route::middleware('role:admin,manager')->group(function () {
+        Route::get('/dashboard/edit/{person}', [PersonController::class, 'edit'])->name('dashboard.edit');
+        Route::put('/dashboard/update/{person}', [PersonController::class, 'update'])->name('dashboard.update');
+        Route::delete('/dashboard/destroy/{person}', [PersonController::class, 'destroy'])->name('dashboard.destroy');
+    });
+
+    Route::middleware('role:admin,manager')->group(function () {
+        Route::resource('personnes', PersonneController::class)->except(['index', 'show']);
+    });
+    Route::resource('personnes', PersonneController::class)->only(['index', 'show']);
 
     // Admin Only routes
     Route::middleware('role:admin')->group(function () {

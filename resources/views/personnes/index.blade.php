@@ -3,6 +3,7 @@
         <h2 class="font-bold text-2xl text-gray-800 leading-tight">
             قائمة الأشخاص
         </h2>
+        @if(Auth::user()->isAdmin() || Auth::user()->isManager())
         <div>
             <a href="{{ route('personnes.create') }}"
                 class="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary-light border border-transparent rounded-md font-bold text-sm text-white uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition ease-in-out duration-150 shadow-sm">
@@ -12,6 +13,7 @@
                 إضافة شخص جديد
             </a>
         </div>
+        @endif
     </x-slot>
 
     <div x-data="datatable(@js($personnes))" class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 shadow-sm rounded-lg">
@@ -59,15 +61,14 @@
                                     المعرف
                                 </div>
                             </th>
-                            <th scope="col" @click="sortBy('nom')"
+                            <th scope="col" @click="sortBy('last_name')"
                                 class="px-6 py-4 cursor-pointer hover:bg-gray-100 select-none">
                                 <div class="flex items-center">اللقب</div>
                             </th>
-                            <th scope="col" @click="sortBy('prenom')"
+                            <th scope="col" @click="sortBy('first_name')"
                                 class="px-6 py-4 cursor-pointer hover:bg-gray-100 select-none">
                                 <div class="flex items-center">الاسم</div>
                             </th>
-                            <th scope="col" class="px-6 py-4">البريد الإلكتروني</th>
                             <th scope="col" class="px-6 py-4">الهاتف</th>
                             <th scope="col" class="px-6 py-4 text-center">إجراءات</th>
                         </tr>
@@ -77,10 +78,9 @@
                             <tr class="hover:bg-gray-50 transition-colors"
                                 :class="{'bg-white': index % 2 === 0, 'bg-gray-50/30': index % 2 !== 0}">
                                 <td class="px-6 py-4 font-bold text-gray-900" x-text="item.id"></td>
-                                <td class="px-6 py-4" x-text="item.nom"></td>
-                                <td class="px-6 py-4" x-text="item.prenom"></td>
-                                <td class="px-6 py-4 text-gray-500" x-text="item.email || '-'"></td>
-                                <td class="px-6 py-4" x-text="item.telephone || '-'"></td>
+                                <td class="px-6 py-4" x-text="item.last_name"></td>
+                                <td class="px-6 py-4" x-text="item.first_name"></td>
+                                <td class="px-6 py-4" x-text="item.phone || '-'"></td>
                                 <td class="px-6 py-4 flex items-center justify-center space-x-3 space-x-reverse">
                                 
                                     <a :href="'/personnes/' + item.id" class="text-green-600 hover:text-green-800 transition-colors bg-green-50 hover:bg-green-100 rounded p-2" title="عرض التفاصيل">
@@ -90,6 +90,7 @@
                                         </svg>
                                     </a>
                                 
+                                    @if(Auth::user()->isAdmin() || Auth::user()->isManager())
                                     <a :href="'/personnes/' + item.id + '/edit'"
                                         class="text-blue-600 hover:text-blue-800 transition-colors bg-blue-50 hover:bg-blue-100 rounded p-2"
                                             title="تعديل">
@@ -113,11 +114,12 @@
                                             </svg>
                                         </button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                         </template>
                         <tr x-show="paginatedItems.length === 0">
-                            <td colspan="6" class="px-6 py-8 text-center text-gray-500">لا توجد بيانات</td>
+                            <td colspan="5" class="px-6 py-8 text-center text-gray-500">لا توجد بيانات</td>
                         </tr>
                     </tbody>
                 </table>
